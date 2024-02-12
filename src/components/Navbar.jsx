@@ -5,6 +5,7 @@ import search from "../assets/search_icon.webp";
 import heart from "../assets/heart_icon.png";
 import home from "../assets/home_icon.png";
 import favorites from "../assets/favorites_icon.png";
+//jkj
 const Navbar = () => {
   return (
     <nav>
