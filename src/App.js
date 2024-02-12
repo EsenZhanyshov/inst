@@ -8,6 +8,7 @@ const App = () => {
       <MainRoutes />
     </div>
   );
+
 };
 
 export default App;
