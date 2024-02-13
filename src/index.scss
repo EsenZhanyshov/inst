@@ -1,0 +1,113 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+a {
+  text-decoration: none;
+}
+
+// ! SideBar
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid rgb(215, 208, 208);
+  .sidebar__links {
+    margin-top: 30px;
+  }
+  .sidebar__links:first-child {
+    margin-bottom: 20px;
+  }
+  .sidebar__links img {
+    width: 30px;
+  }
+}
+// ! Sign Log sections
+.section {
+  width: 30vw;
+  margin: 0 auto;
+  padding-top: 30px;
+  .section__top {
+    padding: 30px 2.5vw 30px 2.5vw;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(215, 208, 208);
+    .section__logo {
+      margin-bottom: 30px;
+    }
+  }
+  .section__form {
+    display: flex;
+    flex-direction: column;
+    .form__input {
+      height: 40px;
+      margin-bottom: 7px;
+    }
+    .form__btn {
+      height: 35px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+      color: #fff;
+      font-weight: 500;
+      background: rgb(22, 148, 207);
+    }
+  }
+  .section__bottom {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    border: 1px solid rgb(215, 208, 208);
+    .section__quest {
+      .section__link {
+        color: rgb(22, 148, 207);
+      }
+    }
+  }
+}
+// ! profile styles
+.profile {
+  width: 90vw;
+  margin: 0 auto;
+  .profile__wrapper {
+    width: 80vw;
+    margin: 0 auto;
+    .profile__top {
+      display: flex;
+      .profile__ava {
+        width: 150px;
+        height: 150px;
+        background: #000;
+        border-radius: 50%;
+        margin: 50px 100px 100px 100px;
+      }
+      .profile__info {
+        margin-top: 40px;
+      }
+    }
+    .profile__bottom {
+      .profile__block {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        .profile__item {
+          grid-column: span 1;
+          height: 300px;
+        }
+      }
+    }
+  }
+}
