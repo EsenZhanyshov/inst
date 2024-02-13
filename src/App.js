@@ -1,14 +1,13 @@
 import React from "react";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/SideBar";
 import MainRoutes from "./routes/MainRoutes";
 
 const App = () => {
   return (
-    <div>
+    <div className="container">
       <MainRoutes />
     </div>
   );
-
 };
 
 export default App;
