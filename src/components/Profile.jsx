@@ -1,18 +1,23 @@
-import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUsers } from "../context/UsersContextProvider";
 import SideBar from "./SideBar";
 import { usePosts } from "../context/PostsContextProvider";
 
 const Profile = () => {
   const { user, getOneUser } = useUsers();
-  const { posts, getPosts } = usePosts();
+  const { posts, getPosts, getOnePost, post } = usePosts();
   const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     getOneUser(id);
     getPosts();
   }, []);
-  function handleClick() {}
+
+  function navigateClick(idpost) {
+    getOnePost(idpost);
+    navigate(`/modal/${idpost}`);
+  }
   return (
     <div className="profile">
       <SideBar />
@@ -30,10 +35,13 @@ const Profile = () => {
               .filter((elem) => elem.userId === id)
               .map((elem) => (
                 <div className="profile__item" key={elem.id}>
-                  <img src={elem.url} alt="" />
-                  <h2>
-                    {user.username} {elem.comm}
-                  </h2>
+                  <div>
+                    <img
+                      src={elem.url}
+                      alt=""
+                      onClick={() => navigateClick(elem.id)}
+                    />
+                  </div>
                 </div>
               ))}
           </div>
