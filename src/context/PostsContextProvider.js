@@ -34,11 +34,31 @@ const PostsContextProvider = ({ children }) => {
       payload: data,
     });
   }
+  // ! get one post
+  async function getOnePost(idpost) {
+    const { data } = await axios.get(`${API_POSTS}/${idpost}`);
+    dispatch({
+      type: "GET_ONE_POST",
+      payload: data,
+    });
+  }
+  // ! delete post
+  async function deletePost(id) {
+    await axios.delete(`${API_POSTS}/${id}`);
+  }
+  async function editPost(id, obj) {
+    await axios.patch(`${API_POSTS}/${id}`, obj);
+  }
   const values = {
     postPosts,
     posts: state.posts,
     getPosts,
+    getOnePost,
+    post: state.post,
+    deletePost,
+    editPost,
   };
+
   return (
     <postsContext.Provider value={values}>{children}</postsContext.Provider>
   );

@@ -29,7 +29,7 @@ const SideBar = () => {
       <NavLink className="sidebar__links">
         <img src={heart} alt="#" />
       </NavLink>
-      <NavLink className="sidebar__links">
+      <NavLink className="sidebar__links" to={`/favorites/${id}`}>
         <img src={favorites} alt="#" />
       </NavLink>
       <NavLink className="sidebar__links" to={`/profile/${id}`}>

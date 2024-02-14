@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUsers } from "../context/UsersContextProvider";
 import logo_inst from "../assets/inst_logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ const RegPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const handleClick = () => {
     if (!username || !email || !password) {
       return;

@@ -4,18 +4,28 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { usePosts } from "../context/PostsContextProvider";
 import { useUsers } from "../context/UsersContextProvider";
 
-const AddPosts = () => {
+const EditPosts = () => {
   const { id } = useParams();
   const { user, getOneUser } = useUsers();
-  useEffect(() => {
-    getOneUser(id);
-  }, []);
+  const { post, getOnePost, editPost } = usePosts();
   const { postPosts } = usePosts();
-  const [url1, setUrl1] = useState("");
-  const [url2, setUrl2] = useState("");
-  const [url3, setUrl3] = useState("");
-  const [comm, setComm] = useState("");
   const navigate = useNavigate();
+  const [url1, setUrl1] = useState(post.url);
+  const [url2, setUrl2] = useState(post.url2);
+  const [url3, setUrl3] = useState(post.url3);
+  const [comm, setComm] = useState(post.comm);
+  useEffect(() => {
+    getOnePost(id);
+  }, []);
+  useEffect(() => {
+    if (!post) {
+      setUrl1(user.url);
+      setUrl2(user.url2);
+      setUrl3(user.url3);
+      setComm(user.comm);
+    }
+  }, [post]);
+  console.log(post);
 
   function handleClick() {
     if (!url1 || !comm) {
@@ -30,12 +40,12 @@ const AddPosts = () => {
       date: Date.now(),
       author: user.username,
     };
-    postPosts(obj);
+    editPost(id, obj);
     setUrl1("");
     setUrl2("");
-    setUrl2("");
+    setUrl3("");
     setComm("");
-    navigate(`/${id}`);
+    navigate(`/modal/${id}`);
   }
   return (
     <section className="section">
@@ -73,13 +83,13 @@ const AddPosts = () => {
             onChange={(e) => setComm(e.target.value)}
           />
           <button className="form__btn btn" onClick={handleClick}>
-            Добавить
+            Сохранить
           </button>
         </div>
       </div>
       <div className="section__bottom">
         <p className="section__quest">
-          <Link className="section__link" to={`/${id}`}>
+          <Link className="section__link" to={`/${post.userId}`}>
             Отмена
           </Link>
         </p>
@@ -88,4 +98,4 @@ const AddPosts = () => {
   );
 };
 
-export default AddPosts;
+export default EditPosts;

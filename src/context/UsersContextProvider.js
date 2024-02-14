@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 import { API_USERS } from "../helpers/const";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,7 @@ const INIT_STATE = {
 
 const UsersContextProvider = ({ children }) => {
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(null); // Создаем переменную currentUser и устанавливаем ее в начальное значение null
 
   const reducer = (state = INIT_STATE, action) => {
     switch (action.type) {
@@ -24,7 +25,7 @@ const UsersContextProvider = ({ children }) => {
     }
   };
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
-  // ! Вытягиваем юзеров из сервера
+
   async function getUsers() {
     const { data } = await axios.get(API_USERS);
     dispatch({
@@ -32,39 +33,42 @@ const UsersContextProvider = ({ children }) => {
       payload: data,
     });
   }
-  // ! Вытяшиваем одного юзера
+
   async function getOneUser(id) {
-    const { data } = await axios.get(`${API_USERS}/${id}`);
-    dispatch({
-      type: "GET_ONE_USER",
-      payload: data,
-    });
+    setTimeout(async () => {
+      const { data } = await axios.get(`${API_USERS}/${id}`);
+      dispatch({
+        type: "GET_ONE_USER",
+        payload: data,
+      });
+    }, 2000);
   }
-  // ! Регаем юзеров
+
   async function postSignin(obj) {
     await getUsers();
-    // ? Проверка на доступность username
     for (const elem of state.users) {
       if (elem.username === obj.username) {
         alert("пользователь с таким именем уже есть");
         return;
       }
     }
-    await axios.post(API_USERS, obj);
-    navigate(`/${obj.id}`);
+    setTimeout(async () => {
+      let res = await axios.post(API_USERS, obj);
+      navigate(`/${res.data.id}`);
+    }, 1000);
   }
-  // ! Вход для юзеров
+
   async function postLogin(obj) {
     await getUsers();
-    // ? Проверка на наличие почты и совпадения пароля
     for (const elem of state.users) {
       if (elem.email === obj.email && elem.password === obj.password) {
         getOneUser(elem.id);
+        setCurrentUser(elem); // Устанавливаем currentUser при успешном входе в систему
         navigate(`/${elem.id}`);
-      } else if (elem.email !== obj.email && elem.password !== obj.password) {
       }
     }
   }
+
   const values = {
     getUsers,
     postSignin,
@@ -72,6 +76,7 @@ const UsersContextProvider = ({ children }) => {
     getOneUser,
     users: state.users,
     user: state.user,
+    currentUser, // Добавляем currentUser в values
   };
 
   return (
